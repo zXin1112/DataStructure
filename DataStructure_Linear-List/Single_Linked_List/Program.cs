@@ -6,56 +6,48 @@ using System.Threading.Tasks;
 //单链表
 namespace Single_Linked_List
 {
+    public delegate void printslDel();
     class Program
     {
         static void Main(string[] args)
         {
             MySingleLinkedList<int> linkedList = new MySingleLinkedList<int>();
+            linkedList.printSl += () =>
+            {
+                for (int i = 0; i < linkedList.Count; i++)
+                {
+                    Console.Write("{0} ", linkedList[i]);
+                }
+                Console.WriteLine();
+            };
+            Console.WriteLine("插入:");
             for (int i = 0; i < 5; i++)
             {
                 linkedList.Add(i);
             }
-            Console.WriteLine("插入:");
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ",linkedList[i]);
-            }
-            Console.WriteLine("\r\n向头结点插入10:");
+            //for (int i = 4; i >= 0; i--)
+            //{
+            //    linkedList.RemoveAt(i);
+            //}
+
+            Console.WriteLine("向头结点插入10:");
             linkedList.Add(0, 10);
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ", linkedList[i]);
-            }
-            Console.WriteLine("\r\n向索引为3插入20:");
+
+            Console.WriteLine("向索引为3插入20:");
             linkedList.Add(3, 20);
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ", linkedList[i]);
-            }
-            Console.WriteLine("\r\n向索引为{0}插入30（最后一个节点）:",linkedList.Count-1);
+
+            Console.WriteLine("向索引为{0}插入30（最后一个节点）:", linkedList.Count - 1);
             linkedList.Add(linkedList.Count - 1, 30);
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ", linkedList[i]);
-            }
-            Console.WriteLine("\r\n移除头结点:");
+
+            Console.WriteLine("移除头结点:");
             linkedList.RemoveAt(0);
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ", linkedList[i]);
-            }
-            Console.WriteLine("\r\n移除索引为2的节点:");
+
+            Console.WriteLine("移除索引为2的节点:");
             linkedList.RemoveAt(2);
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ", linkedList[i]);
-            }
-            Console.WriteLine("\r\n移除索引为{0}的节点（最后一个节点）:",linkedList.Count-1);
+
+            Console.WriteLine("移除索引为{0}的节点（最后一个节点）:", linkedList.Count - 1);
             linkedList.RemoveAt(linkedList.Count - 1);
-            for (int i = 0; i < linkedList.Count; i++)
-            {
-                Console.Write("{0} ", linkedList[i]);
-            }
+
             Console.ReadKey();
         }
     }
@@ -78,8 +70,8 @@ namespace Single_Linked_List
     //实现
     class MySingleLinkedList<T>
     {
+        public event printslDel printSl;//声明事件，使用自定义委托的事件
         private int count;
-
         public int Count { get => count; }//链表节点个数
 
         private Node<T> head;//头结点
@@ -90,14 +82,8 @@ namespace Single_Linked_List
         }
         public T this[int index] //声明索引器
         {
-            get
-            {
-                return GetNodeByIndex(index).item;
-            }
-            set
-            {
-                GetNodeByIndex(index).item = value;
-            }
+            get { return GetNodeByIndex(index).item; }
+            set { GetNodeByIndex(index).item = value; }
         }
         //返回指定索引index的节点
         private Node<T> GetNodeByIndex(int index)
@@ -124,6 +110,7 @@ namespace Single_Linked_List
                 prevNode.Next = node;//使尾节点指向要添加的节点
             }
             count++;//链表长度自增
+            printSl?.Invoke();//若事件不为空则执行
         }
         /// <summary>
         /// 向指定位置添加节点
@@ -156,6 +143,7 @@ namespace Single_Linked_List
                 //前一个节点=》新节点=》原指定索引的节点
             }
             count++;
+            printSl?.Invoke();
         }
         /// <summary>
         /// 删除指定索引的节点
@@ -178,6 +166,7 @@ namespace Single_Linked_List
                 deleteNode = null;
             }
             count--;
+            printSl?.Invoke();
         }
     }
 }

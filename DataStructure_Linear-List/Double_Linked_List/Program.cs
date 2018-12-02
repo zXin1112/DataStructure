@@ -10,17 +10,40 @@ namespace Double_Linked_List
     {
         static void Main(string[] args)
         {
-            MyDoubleLinkedList<int> myDouble = new MyDoubleLinkedList<int>();
+
+            MyDoubleLinkedList<int> myDouble = new MyDoubleLinkedList<int>();//创建对象
+            myDouble.printDb += (object s, EventArgs e) =>
+            {//订阅事件，打印链表中的内容
+                for (int i = 0; i < myDouble.Count; i++)
+                {
+                    Console.Write("{0} ", myDouble[i]);
+                }
+                Console.WriteLine();
+            };//用Lambda表达式注册
+
+            Console.WriteLine("在尾部后插入6个值 AddAfter：");
             for (int i = 0; i < 6; i++)
             {
-                myDouble.AddBefore(i);
+                myDouble.AddAfter(i);
             }
-            for (int i = 0; i < myDouble.Count; i++)
-            {
-                Console.Write("{0} ", myDouble[i]);
-            }
+
+            Console.WriteLine("在尾部前插入6 AddBefore：");
+            myDouble.AddBefore(6);
+
+            Console.WriteLine("向下标为2的节点之后插入7 InsertAfter:");
+            myDouble.InsertAfter(2, 7);
+
+            Console.WriteLine("向下标为4之前插入节点8 InsertBefore:");
+            myDouble.InsertBefore(4, 8);
+
+            Console.WriteLine("移除下标为5的节点  RemoveAt:");
+            myDouble.RemoveAt(5);
+
             Console.ReadLine();
         }
+
+
+
     }
     //双链表节点定义
     class DbNode<T>
@@ -34,6 +57,8 @@ namespace Double_Linked_List
     //双链表实现
     public class MyDoubleLinkedList<T>
     {
+        public event EventHandler printDb;//声明事件，使用系统定义委托EventHandler的事件
+
         private int count;//链表节点个数
         private DbNode<T> head;//头结点
         public int Count { get => count; }
@@ -41,6 +66,7 @@ namespace Double_Linked_List
         {
             count = 0;
             head = null;
+
         }
         public T this[int index]//索引器
         {
@@ -75,6 +101,13 @@ namespace Double_Linked_List
                 newNode.Prve = lastNode;//插入节点的前驱指向原最后一个节点
             }
             count++;
+
+            //if (printDb != null)
+            //{              
+            //    printDb(this, null);
+            //}    
+
+            printDb?.Invoke(this, null);//若事件不为空则执行
         }
         /// <summary>
         /// 在尾部之前插入节点
@@ -100,10 +133,12 @@ namespace Double_Linked_List
 
                 newNode.Next = lastNode;//新节点的后继指向最后一个节点
                 lastNode.Prve = newNode;//最后一个节点的前驱之间新节点
-                if (count < 2 || head.Next==null)//此时0<count<2,改变头部指针
+
+                if (count < 2 && head.Next == null)//此时0<count<2,改变头部指针。当链表中只有一个节点时，head无后继，由于在尾部（此时为head）之前添加节点，故使head指向新节点
                     head = newNode;
             }
             count++;
+            printDb?.Invoke(this, null);
         }
         /// <summary>
         /// 向指定位置后插入节点
@@ -119,37 +154,40 @@ namespace Double_Linked_List
                     head = new DbNode<T>(value);
                 else//当头部有元素
                 {
-                    tempNode = new DbNode<T>(value);
-                    tempNode.Next = head.Next;
-                    head.Next.Prve = tempNode;
-                    tempNode.Prve = head;
-                    head.Next = tempNode;
+                    tempNode = new DbNode<T>(value);//要插入的节点
+                    tempNode.Next = head.Next;//插入节点的后继指向头部的后继
+                    head.Next.Prve = tempNode;//头部后继的前驱指向插入节点
+
+                    tempNode.Prve = head;//插入节点的前驱指向头部
+                    head.Next = tempNode;//头部的后继改为插入节点
                 }
             }
             else//不插入头部
             {
                 //在指定位置后插入
-
-                DbNode<T> prveNode = GetNodedByIndex(index);//获取指定位置的元素作为前驱节点
-                DbNode<T> NextNode = prveNode.Next;//指定位置节点的后继作为后继节点
+                //指定位置=》后继     插入前
+                DbNode<T> prveNode = GetNodedByIndex(index);//获取指定位置的节点 作为 前驱节点
+                DbNode<T> NextNode = prveNode.Next;//指定位置节点的后继 作为 后继节点
                 tempNode = new DbNode<T>(value);//要插入的节点
-                prveNode.Next = tempNode;//指定位置节点的后继是要插入节点
-                tempNode.Prve = prveNode;//要插入节点的前驱是指定位置的节点
-                if (NextNode != null)//若指定位置节点的后继不为空
+                prveNode.Next = tempNode;//前驱的后继 指向 插入节点
+                tempNode.Prve = prveNode;//要插入节点的前驱 指向 前驱的后继
+                if (NextNode != null)//若后继不为空
                 {
-                    tempNode.Next = NextNode;//要插入节点的后继为指定位置节点的后继
-                    NextNode.Prve = tempNode;//指定位置后继节点的前驱为插入节点
+                    tempNode.Next = NextNode;//要插入节点的后继 指向 后继
+                    NextNode.Prve = tempNode;//后继的前驱 指向 插入节点
                 }
+                //指定位置（前驱）=》插入节点=》后继  插入后
 
             }
             count++;
+            printDb?.Invoke(this, null);
         }
         /// <summary>
         /// 指定位置之前插入节点
         /// </summary>
         /// <param name="index">指定位置索引</param>
         /// <param name="value">插入的值</param>
-        public void AddBefore(int index, T value)
+        public void InsertBefore(int index, T value)
         {
             DbNode<T> tempNode;
             if (index == 0)
@@ -167,16 +205,21 @@ namespace Double_Linked_List
             }
             else
             {
-                DbNode<T> NextNode = GetNodedByIndex(index);
-                DbNode<T> PrveNode = NextNode.Prve;
-                tempNode = new DbNode<T>(value);
-                tempNode.Next = NextNode;
-                NextNode.Prve = tempNode;
+                //在指定位置前插入
+                //前驱=》指定位置（后继）  插入前
+                DbNode<T> NextNode = GetNodedByIndex(index);//获取指定节点作为后继
+                DbNode<T> PrveNode = NextNode.Prve;//获取指定节点前驱作为前驱
+                tempNode = new DbNode<T>(value);//要插入的节点
 
-                tempNode.Prve = PrveNode;
-                PrveNode.Next = tempNode;
+                tempNode.Next = NextNode;//插入节点的后继 指向 后继
+                NextNode.Prve = tempNode;//后继的前驱 指向 要插入的节点
+
+                tempNode.Prve = PrveNode;//插入节点的前驱 指向 前驱
+                PrveNode.Next = tempNode;//前驱的后继 指向 要插入节点
+                //前驱=》插入节点=》原指定位置（后继）  插入后
             }
             count++;
+            printDb?.Invoke(this, null);
         }
         /// <summary>
         /// 移除指定位置元素
@@ -184,23 +227,25 @@ namespace Double_Linked_List
         /// <param name="index">指定位置索引</param>
         public void RemoveAt(int index)
         {
-            if (index == 0)
-                head = head.Next;
+            if (index == 0)//若要删除头结点
+                head = head.Next;//头结点指向原头结点的后继
             else
             {
 
-                DbNode<T> PrveNode = GetNodedByIndex(index - 1);
-                if (PrveNode.Next == null)
+                DbNode<T> PrveNode = GetNodedByIndex(index - 1);//获取要移除节点的前驱
+                if (PrveNode.Next == null)//若要删除的节点不存在
                     throw new ArgumentOutOfRangeException("index", "索引超出范围");
-                DbNode<T> DeleteNode = PrveNode.Next;
-                DbNode<T> NextNode = DeleteNode.Next;
-                PrveNode.Next = NextNode;
-                if (NextNode != null)
-                {
-                    NextNode.Prve = PrveNode;
-                }
-                DeleteNode = null;
+                DbNode<T> DeleteNode = PrveNode.Next;//获取要删除的节点
+                DbNode<T> NextNode = DeleteNode.Next;//获取要删除节点的后继
 
+                PrveNode.Next = NextNode;//要删除的节点的前驱 指向 要删除的节点的后继
+                if (NextNode != null)//若要删除的节点的后继存在
+                {
+                    NextNode.Prve = PrveNode;//要删除的节点的后继的前驱 指向 要删除的节点的前驱
+                }
+                DeleteNode = null;//删除节点为空
+                //前驱=》要删除的节点=》后继 删除前
+                //前驱=》后继               删除后
                 //if (index < 0 || index >= count)
                 //    throw new ArgumentOutOfRangeException("index", "索引超出范围");
                 //else
@@ -215,6 +260,7 @@ namespace Double_Linked_List
                 //}
             }
             count--;
+            printDb?.Invoke(this, null);
         }
     }
 }
