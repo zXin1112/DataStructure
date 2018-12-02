@@ -134,7 +134,8 @@ namespace Double_Linked_List
                 newNode.Next = lastNode;//新节点的后继指向最后一个节点
                 lastNode.Prve = newNode;//最后一个节点的前驱之间新节点
 
-                if (count < 2 && head.Next == null)//此时0<count<2,改变头部指针。当链表中只有一个节点时，head无后继，由于在尾部（此时为head）之前添加节点，故使head指向新节点
+                if (count < 2 && head.Next == null)//此时0<count<2,改变头部指针。
+                    //当链表中只有一个节点时，head无后继，由于在尾部（此时为head）之前添加节点，故使head指向新节点
                     head = newNode;
             }
             count++;
