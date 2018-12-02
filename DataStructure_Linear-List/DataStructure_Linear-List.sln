@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ArrayListAndList", "ArrayLi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Single_Linked_List", "Single_Linked_List\Single_Linked_List.csproj", "{B22C717C-9F28-4A55-8F53-B517A057B6BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Double_Linked_List", "Double_Linked_List\Double_Linked_List.csproj", "{34338BBE-AF43-4461-BE7E-B1280D632C51}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{B22C717C-9F28-4A55-8F53-B517A057B6BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B22C717C-9F28-4A55-8F53-B517A057B6BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B22C717C-9F28-4A55-8F53-B517A057B6BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
