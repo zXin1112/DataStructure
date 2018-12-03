@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Single_Linked_List", "Singl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Double_Linked_List", "Double_Linked_List\Double_Linked_List.csproj", "{34338BBE-AF43-4461-BE7E-B1280D632C51}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Circular_Linked_List", "Circular_Linked_List\Circular_Linked_List.csproj", "{60E85B24-3567-4242-8EEE-3D380737E06F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{34338BBE-AF43-4461-BE7E-B1280D632C51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{60E85B24-3567-4242-8EEE-3D380737E06F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{60E85B24-3567-4242-8EEE-3D380737E06F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{60E85B24-3567-4242-8EEE-3D380737E06F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{60E85B24-3567-4242-8EEE-3D380737E06F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
