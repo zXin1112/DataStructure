@@ -30,6 +30,21 @@ namespace Tree
 
             Console.WriteLine("\r\n-----------后序遍历----------");
             binaryTree.PostOrder();//调用后序遍历扩展方法  左右根
+
+            Console.Write("\r\n\r\n非递归遍历");
+
+            Console.WriteLine("\r\n-----------前序遍历----------");
+            binaryTree.PreOrderNoRecurise();//调用后序遍历扩展方法  左右根
+
+            Console.WriteLine("\r\n-----------中序遍历----------");
+            binaryTree.MidOrderNoRecurise();//调用后序遍历扩展方法  左右根
+
+            Console.WriteLine("\r\n-----------后序遍历----------");
+            binaryTree.PostOrderNoRecurise();//调用后序遍历扩展方法  左右根
+
+            Console.WriteLine("\r\n-----------层次遍历----------");
+            binaryTree.LevelOrder();
+
             Console.ReadKey();
         }
     }
