@@ -25,7 +25,7 @@ namespace Tree
                 Console.Write("{0} ", tempnode.data);
                 if (tempnode.rchild != null)//检查右子树
                     stack.Push(tempnode.rchild);//出栈的顺序为先进后出，为了输出为根=>左=>右，这里先让右子树进栈，
-                if (tempnode.lchild != null)//再让左子树进栈,使得循环时让左子树先出栈
+                if (tempnode.lchild != null)//再让左子树进栈,使得循环时保证了左子树先出栈
                     stack.Push(tempnode.lchild);
             }
         }
@@ -62,7 +62,7 @@ namespace Tree
         public static void PostOrderNoRecurise<T>(this MyBinaryTree<T> myBinary)
         {
             if (myBinary.Root == null) return;//检查根节点
-            Stack<Node<T>> stackIn = new Stack<Node<T>>();//暂时存储的栈  栈内节点顺序 左=》右
+            Stack<Node<T>> stackIn = new Stack<Node<T>>();//暂时存储的栈 
             Stack<Node<T>> stackOut = new Stack<Node<T>>();//向外输出的栈 栈内节点顺序 根=》右=》左
             stackIn.Push(myBinary.Root);
 
