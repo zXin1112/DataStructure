@@ -83,5 +83,7 @@ namespace Tree
             }
             return p.lchild == null && p.rchild == null;
         }
+
+        
     }
 }

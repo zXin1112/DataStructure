@@ -45,6 +45,30 @@ namespace Tree
             Console.WriteLine("\r\n-----------层次遍历----------");
             binaryTree.LevelOrder();
 
+            Console.WriteLine("\r\n创建二叉查找树");
+
+            MyBinarySearchTree myBinarySearch = new MyBinarySearchTree();
+            myBinarySearch.InsertNode(8);
+           
+                myBinarySearch.InsertNode(4);
+            myBinarySearch.InsertNode(10);
+            myBinarySearch.InsertNode(20);
+            myBinarySearch.InsertNode(2);
+            myBinarySearch.InsertNode(5);
+            myBinarySearch.InsertNode(1);
+            myBinarySearch.InsertNode(15);
+            myBinarySearch.InsertNode(21);
+            Console.WriteLine("\r\n-----------中序遍历----------");
+            myBinarySearch.MidPrint();
+
+            Console.WriteLine("\r\n-----------层次遍历----------");
+            myBinarySearch.LevelOrder();
+
+            Console.WriteLine("\r\n-----------四则运算----------");
+            Console.Write("请输入四则运算表达式:");
+           string construcStr = Console.ReadLine();
+            MyBinaryExprTree exprTree = new MyBinaryExprTree(construcStr);
+           Console.WriteLine( "结果：{0}={1}",construcStr, exprTree.GetResult());
             Console.ReadKey();
         }
     }

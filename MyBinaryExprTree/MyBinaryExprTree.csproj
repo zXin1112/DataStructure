@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E5C3B32E-A306-47DD-800E-66EF7EAB3BE8}</ProjectGuid>
+    <ProjectGuid>{0267F39F-FD35-4523-881C-B0B5C98FE4EC}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>Tree</RootNamespace>
-    <AssemblyName>Tree</AssemblyName>
+    <RootNamespace>MyBinaryExprTree</RootNamespace>
+    <AssemblyName>MyBinaryExprTree</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -42,14 +42,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MyBinaryExprTree.cs" />
-    <Compile Include="MyBinarySearchTree.cs" />
-    <Compile Include="MyBinaryTree.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Non-Recursive_Traversal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recursive_Traversal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
