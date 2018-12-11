@@ -15,7 +15,7 @@ namespace Sort
         {
             _printDel = printDel;
         }
-        public void BubleSort(int[] arr)
+        public void BubleSort(int[] arr)//大数往后放
         {
             Console.WriteLine("\r\n交换类排序之冒泡排序：");
             _printDel(arr, true);
@@ -23,7 +23,7 @@ namespace Sort
             int length = arr.Length;
             for (int i = 1; i < length; i++)//外层循环 控制循环多少次
                 for (int j = 0; j < length - i; j++)//内层循环 控制每次比较的两个元素
-                    if (arr[j] >arr[j + 1])//若前面的数大于后面的数，则交换
+                    if (arr[j] >arr[j + 1])//若前面的数大于后面的数，则交换，使大数往后放
                     {
                         int temp = arr[j];
                         arr[j] = arr[j + 1];

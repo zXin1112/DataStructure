@@ -44,6 +44,7 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SelectTypeSort.cs" />
     <Compile Include="SortExchangeTypes.cs" />
     <Compile Include="SortInsertionTypes.cs" />
   </ItemGroup>
