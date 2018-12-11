@@ -14,7 +14,7 @@ namespace Sort
         {
             _printDel = printDel;
         }
-        public void insertionSort(int[] arr)
+        public void insertionSort( int[] arr)
         {
             Console.WriteLine("插入类排序之插入排序：");
 
@@ -40,19 +40,21 @@ namespace Sort
                 tmp = arr[i];//取一个值
                 int j;
                 for (j=i;j>0&&arr[j-1]>tmp;j--)//和前一个值比较，若前一个值大于当前的值
-                    arr[j] = arr[j- 1];//将前一个值移动到当前值的位置
-                arr[j] = tmp;//当所有的值都比较完后，插入
+                    arr[j] = arr[j- 1];//将前一个值移动到当前值的位置,j-- j移动到j-1的位置指针指向前一个位置
+                arr[j] = tmp;//当不满足条件后，插入
                 
-            }_printDel(arr, false);
+            }
+            _printDel(arr, false);
         }
         public void shellSort(int[] arr)
         {
+            Console.WriteLine("\r\n插入类排序之希尔排序：");
             _printDel(arr, true);
             int len = arr.Length;
             int temp,gap=1;
             while (gap < len / 3) gap = gap * 3 + 1;//间隔初值
 
-            for (gap = gap; gap > 0; gap /= 3)//间隔变换
+            for (; gap > 0; gap /= 3)//间隔变换
             {
                 //插入排序
                 for(int i = gap; i < len; i++)
