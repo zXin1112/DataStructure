@@ -8,18 +8,24 @@ namespace Sort
 {
     public class SelectTypeSort
     {
-        public delegate void PrintDel(int[] arr, bool a);//声明输出数组内容委托
+        public delegate int[] PrintDel(int[] arr, bool a);//声明输出数组内容委托
         private PrintDel _printDel;//创建委托对象
         public SelectTypeSort(PrintDel printDel)
         {
             _printDel = printDel;
         }
+        /// <summary>
+        /// 选择排序
+        /// </summary>
+        /// <param name="arr"></param>
         public void selectionSort(int[] arr)//小数往前放
         {
+            Console.WriteLine("\r\n选择类排序之选择排序：");
+            arr= _printDel(arr, true);
             int len = arr.Length;
             for (int i = 0; i < len - 1; i++)//控制比较的值
             {
-                for (int j = i + 1; j < len; j++)//和那个数进行比较
+                for (int j = i + 1; j < len; j++)//和哪个数进行比较
                 {
                     if (arr[i] > arr[j])
                     {//若前面的数大于后面的数则交换，使小数往前放
@@ -31,11 +37,16 @@ namespace Sort
             }
             _printDel(arr, false);
         }
-        //建立大根堆
+        /// <summary>
+        /// 建立大根堆
+        /// </summary>
+        /// <param name="arr">数组</param>
+        /// <param name="index">当前节点</param>
+        /// <param name="len">长度</param>
         private void buildMaxHeap(int[] arr, int index, int len)
         {
 
-            int child;
+            int child;//当前节点的子树
             for (; 2 * index + 1 < len;   index=child)//每次循环更新index的值，保证小数放在叶子上
             {
                 //对于index节点，左子树2*index+1 右子树2*index+2
@@ -52,9 +63,14 @@ namespace Sort
                 else break;
             }
         }
-        //堆排序
+        /// <summary>
+        /// 堆排序
+        /// </summary>
+        /// <param name="arr">要排序的数组</param>
         public void HeapSort(int [] arr)
         {
+            Console.WriteLine("\r\n选择类排序之堆排序：");
+            arr= _printDel(arr, true);
             int len = arr.Length;//数组长度
             for (int i = len/2-1; i >=0; i--)//第一次建大根堆
             {

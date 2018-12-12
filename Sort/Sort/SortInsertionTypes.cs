@@ -8,17 +8,18 @@ namespace Sort
 {
     public class SortInsertionTypes
     {
-        public delegate void PrintDel(int[] arr, bool a);
+        public delegate int[] PrintDel(int[] arr, bool a);
         public PrintDel _printDel;
         public SortInsertionTypes(PrintDel printDel)
         {
             _printDel = printDel;
         }
+        //插入排序
         public void insertionSort( int[] arr)
         {
             Console.WriteLine("插入类排序之插入排序：");
 
-            _printDel(arr, true);
+            arr=_printDel(arr, true);
             var len = arr.Length;
             //int preIndex, current;//前一个元素和当前元素
             //for (var i = 1; i < len; i++)//默认第一个元素已排好，从第二个元素开始
@@ -46,10 +47,11 @@ namespace Sort
             }
             _printDel(arr, false);
         }
+        //希尔排序
         public void shellSort(int[] arr)
         {
             Console.WriteLine("\r\n插入类排序之希尔排序：");
-            _printDel(arr, true);
+            arr= _printDel(arr, true);
             int len = arr.Length;
             int temp,gap=1;
             while (gap < len / 3) gap = gap * 3 + 1;//间隔初值

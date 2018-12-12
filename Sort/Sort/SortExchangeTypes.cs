@@ -9,7 +9,7 @@ namespace Sort
     public class SortExchangeTypes
     {
 
-        public delegate void PrintDel(int[] arr, bool a);//声明输出数组内容委托
+        public delegate int[] PrintDel(int[] arr, bool a);//声明输出数组内容委托
         private PrintDel _printDel;//创建委托对象
         public SortExchangeTypes(PrintDel printDel)
         {
@@ -18,7 +18,7 @@ namespace Sort
         public void BubleSort(int[] arr)//大数往后放
         {
             Console.WriteLine("\r\n交换类排序之冒泡排序：");
-            _printDel(arr, true);
+            arr= _printDel(arr, true);
 
             int length = arr.Length;
             for (int i = 1; i < length; i++)//外层循环 控制循环多少次
@@ -34,7 +34,7 @@ namespace Sort
         public void QuickSort(int[] arr)
         {
             Console.WriteLine("\r\n交换类排序之快速排序：");
-            _printDel(arr, true);
+            arr= _printDel(arr, true);
             QuickSort(arr, 0, arr.Length - 1);
             _printDel(arr, false);
         }
