@@ -51,7 +51,8 @@ namespace Sort
         /// <param name="R">右边界</param>
         private void merge(int[] arr, int L, int M, int R)
         {
-            int[] t = new int [R - L + 1];//临时数组，临时存放数据
+            int len = R - L + 1;//临时数组的长度
+            int[] t = new int [len];//临时数组，临时存放数据
             int left = L, right = M + 1;//左右两个集合的起始位置
             int temp = 0;//临时数组的起始位置
 
@@ -65,7 +66,7 @@ namespace Sort
             //检查左右两边的某个集合是否还有值，若有值则赋值给临时集合
             while (left <= M) { t[temp++] = arr[left++]; }
             while (right <= R) { t[temp++] = arr[right++]; }
-            for (int i = 0; i <= R - L; i++)
+            for (int i = 0; i <len; i++)
                 arr[i + L] = t[i];//将临时集合中的值赋值给原数组
 
         }

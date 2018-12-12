@@ -46,12 +46,12 @@ namespace Sort
         private void buildMaxHeap(int[] arr, int index, int len)
         {
 
-            int child;//当前节点的子树
-            for (; 2 * index + 1 < len;   index=child)//每次循环更新index的值，保证小数放在叶子上
+        //  ;//当前节点的子树
+            for (  int child; 2 * index + 1 < len;   index=child)//每次循环更新index的值，保证小数放在叶子上
             {
                 //对于index节点，左子树2*index+1 右子树2*index+2
-                child = 2 * index + 1;//获取左子树
-                if (child < len - 1 && arr[child + 1] > arr[child])//child<len-1判断是否有右子树，arr[child + 1] > arr[child]判断右子树是否大于左子树
+                child = 2 * index + 1;//获取左子树,每次都要更新子树
+                if (child+ 1 < len  && arr[child + 1] > arr[child])//child+1<len判断是否有右子树，arr[child + 1] > arr[child]判断右子树是否大于左子树
                     child++;//若大于，则用右子树与根节点比较
                 //使用两个子树中最大的子树与根节点比较
                 if (arr[child] > arr[index])//若子树比根节点大，则交换
