@@ -266,3 +266,162 @@
 		                }
 		            }
 		        }
+
+### 最短路径问题
+
+最短路径问题分为两类
+1. 某一点到其他各顶点之间的距离最短问题，一点对应多个点，单源点最短路径
+2. 某一点到某一点之间的距离最短，多个点与多个点之间的最短路径，所有顶点之间的最短路径
+
+#### Dijkstra算法
+* 基本思想
+	* 将图中顶点的集合分为两组S和U，并按最短路径长度的递增次序依次将集合U中的顶点加入到S中，在加入的过程中，总保持从原点v到S中各顶点的最短路径长度不大于从原点v到U中任何顶点的最短路径长度。
+* 实现
+
+		  static void Dijkstra(int[,] cost, int v)
+        {
+            int n = cost.GetLength(1); // 计算顶点个数
+            int[] s = new int[n];      // 集合S
+            int[] dist = new int[n];   // 结果集
+            int[] path = new int[n];   // 路径集
+
+            for (int i = 0; i < n; i++)
+            {
+                // 初始化结果集
+                dist[i] = cost[v, i];
+                // 初始化路径集
+                if (cost[v, i] > 0)
+                {
+                    // 如果源点与顶点存在边
+                    path[i] = v;
+                }
+                else
+                {
+                    // 如果源点与顶点不存在边
+                    path[i] = -1;
+                }
+            }
+
+            s[v] = 1;   // 将源点加入集合S
+            path[v] = 0;//原点到原点的权值为0
+
+            for (int i = 0; i < n; i++)
+            {
+                int u = 0;  // 指示剩余顶点在dist集合中的最小值的索引号
+                int minDis = int.MaxValue; // 指示剩余顶点在dist集合中的最小值大小
+
+                // 01.计算dist集合中的最小值
+                for (int j = 0; j < n; j++)
+                {
+                    if (s[j] == 0 && dist[j] > 0 && dist[j] < minDis)
+                    {
+                        u = j;
+                        minDis = dist[j];
+                    }
+                }
+
+                s[u] = 1; // 将抽出的顶点放入集合S中
+
+                // 02.计算源点经过顶点u到其余顶点的距离
+                for (int j = 0; j < n; j++)
+                {
+                    // 如果顶点不在集合S中
+                    if (s[j] == 0)
+                    {
+                        // 加入的顶点如与其余顶点存在边，并且重新计算的值小于原值
+                        if (cost[u, j] > 0 && (dist[j] == 0 || dist[u] + cost[u, j] < dist[j]))
+                        {
+                            // 计算更小的值代替原值
+                            dist[j] = dist[u] + cost[u, j];
+                            path[j] = u;
+                        }
+                    }
+                }
+            }
+
+
+            // 打印源点到各顶点的路径及距离
+            for (int i = 0; i < n; i++)
+            {
+                if (s[i] == 1)
+                {
+                    Console.Write("从{0}到{1}的最短路径为：", v, i);
+                    Console.Write(v + "→");
+                    // 使用递归获取指定顶点在路径上的前一顶点
+                    GetPath(path, i, v);
+                    Console.Write(i + Environment.NewLine + "SUM:");
+                    Console.WriteLine("路径长度为：{0}", dist[i]);
+                }
+            }
+        }
+
+#### Floyd算法
+* 基本思想
+	* 逐个顶点试探，从Vi到Vj的所有可能存在的路径中选出最短，通过迭代不断刷新每个顶点之间的最短距离，最终获取任意顶点的最短路径长度 
+* 实现
+
+		 static void Floyd(int[,] cost, int v)
+        {
+            int n = cost.GetLength(1);  // 获取顶点个数
+            int[,] A = new int[n, n];   // 存放最短路径长度
+            int[,] path = new int[n, n];// 存放最短路径信息
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    // 辅助数组A和path的初始化
+                    A[i, j] = cost[i, j];
+                    path[i, j] = -1;
+                }
+            }
+
+            // Flyod算法核心代码部分
+            for (int k = 0; k < n; k++)
+            {
+                for (int i = 0; i < n; i++)
+                {
+                    for (int j = 0; j < n; j++)
+                    {
+                        // 如果存在中间顶点K的路径
+                        if (i != j && A[i, k] != 0 && A[k, j] != 0)
+                        {
+                            // 如果加入中间顶点k后的路径更短
+                            if (A[i, j] == 0 || A[i, j] > A[i, k] + A[k, j])
+                            {
+                                // 使用新路径代替原路径
+                                A[i, j] = A[i, k] + A[k, j];
+                                path[i, j] = k;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // 打印最短路径及路径长度
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (A[i, j] == 0)
+                    {
+                        if (i != j)
+                        {
+                            Console.WriteLine("从{0}到{1}没有路径!", i, j);
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("从{0}到{1}的路径为：", i, j);
+                        Console.Write(i + "→");
+                        // 使用递归获取指定顶点的路径
+                        GetPath(path, i, j);
+                        Console.Write(j + "     ");
+                        Console.WriteLine("路径长度为：{0}", A[i, j]);
+                    }
+                }
+                Console.WriteLine();
+            }
+        }
+
+		
